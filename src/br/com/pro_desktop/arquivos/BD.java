@@ -7,6 +7,7 @@ package br.com.pro_desktop.arquivos;
 
 import br.com.pro_desktop.model.Cliente;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,6 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
+import java.lang.reflect.Type;
+
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  *
@@ -26,30 +32,22 @@ public class BD {
     public static List<Cliente> listCliente = new ArrayList<>();
     
     
+    Type type = new TypeToken<List<Cliente>>(){}.getType();
+    Gson gson = new GsonBuilder().create();
+    String json = gson.toJson(listCliente, type);
     
-// pra depois   
     
-//    public static void gravaobj(File arquivo , List<Cliente> listCliente){
-//               try {
-//                   
-//                       ObjectOutputStream output = new ObjectOutputStream(new
-//FileOutputStream(arquivo));
-//                       
-//                       output.writeObject(listCliente);
-//               }
-//               catch(Exception e){
-//                       System.out.println(e.toString());
-//               }
-//       }
-//    
+    List<Cliente> listaRetornoCliente = gson.fromJson(json, type);
+ 
     
-    public static boolean escreverTexto(File arquivo, String texto) {
+    
+    public static boolean escreverTexto(File arquivo, String json) {
         boolean retorno = false;
         try {
 
             BufferedWriter buff = new BufferedWriter(
                     new FileWriter(arquivo, true));
-            buff.write(texto);
+            buff.write(json);
             buff.close();
             retorno = true;
         } catch (IOException e) {
