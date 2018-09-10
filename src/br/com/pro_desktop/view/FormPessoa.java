@@ -5,6 +5,7 @@
  */
 package br.com.pro_desktop.view;
 
+import br.com.pro_desktop.arquivos.BD;
 import br.com.pro_desktop.controller.ClienteDAO;
 import br.com.pro_desktop.model.Cliente;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import javax.swing.JOptionPane;
 public class FormPessoa extends javax.swing.JDialog {
 
     ClienteDAO dao = new ClienteDAO();
+    BD bd = new BD();
     
     public void atualizaTabela(){
         listObjetos.clear();
@@ -359,6 +361,7 @@ public class FormPessoa extends javax.swing.JDialog {
         Cliente obj = listObjetos.get(linhaSelecionada);
         dao.addDao(obj);
         trataEdicao(false);
+        bd.grava();
         atualizaTabela();
         }
     }//GEN-LAST:event_btSalvarActionPerformed
